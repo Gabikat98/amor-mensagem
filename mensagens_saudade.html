@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para quando sentir saudade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      padding: 20px;
+    }
+    header, footer {
+      font-size: 1.5em;
+      margin: 15px 0;
+      color: #000;
+    }
+    .envelope {
+      font-size: 2em;
+      color: #000;
+      margin: 0 8px;
+    }
+    .heart-button {
+      background-color: #c00;
+      border: none;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      position: relative;
+      margin: 0 auto 10px auto;
+      clip-path: polygon(
+        50% 0%,
+        61% 14%,
+        75% 14%,
+        82% 21%,
+        82% 33%,
+        75% 40%,
+        50% 67%,
+        25% 40%,
+        18% 33%,
+        18% 21%,
+        25% 14%,
+        39% 14%
+      );
+      transition: background-color 0.3s ease;
+    }
+    .heart-button:hover {
+      background-color: #e00;
+    }
+    .instruction {
+      font-size: 1em;
+      margin-bottom: 20px;
+      color: #000;
+    }
+    .message {
+      font-size: 1.3em;
+      max-width: 500px;
+      margin: 0 auto 10px auto;
+      min-height: 80px;
+      line-height: 1.4em;
+    }
+    .signature {
+      font-size: 1em;
+      color: #c00;
+      text-align: right;
+      max-width: 500px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header><span class="envelope">💌</span> Para quando sentir saudade <span class="envelope">💌</span></header>
+  <button class="heart-button" id="openMsgBtn" aria-label="Abrir mensagem do dia"></button>
+  <div class="instruction">Clique para abrir a mensagem</div>
+  <div class="message" id="messageArea"></div>
+  <div class="signature" id="signatureArea"></div>
+  <footer><span class="envelope">💌</span></footer>
+
+<script>
+  const messages = [
+    "Meu amor, que a força do nosso sentimento te guie sempre.",
+    "Você é minha inspiração diária, nunca se esqueça disso.",
+    "Mesmo na distância, meu carinho está contigo, sempre.",
+    "Sua coragem e dedicação me orgulham muito.",
+    "Que a união que temos seja nossa maior fortaleza.",
+    "Cada desafio que enfrentamos nos torna mais fortes.",
+    "Amor verdadeiro é o que nos mantém juntos, hoje e sempre.",
+    "Nunca duvide do quanto eu acredito em você.",
+    "Você é o motivo do meu sorriso todos os dias.",
+    "Mesmo longe, estamos sempre conectados pelo coração.",
+    "Meu carinho por você é infinito e incondicional.",
+    "Acredite no poder do nosso amor e na sua força.",
+    "Sua presença na minha vida é meu maior presente.",
+    "Com você, enfrento qualquer tempestade com coragem.",
+    "Você é minha luz nos dias mais escuros.",
+    "Nosso amor é um refúgio seguro para nós dois.",
+    "A cada amanhecer, penso em você e me fortaleço.",
+    "Não importa a distância, meu coração é seu.",
+    "Você é minha inspiração para ser melhor sempre.",
+    "O amor que sinto por você só cresce a cada dia.",
+    "Confie em você, eu confio e estarei sempre aqui.",
+    "Teu sorriso é minha paz, tua voz minha melodia.",
+    "Estamos juntos, mesmo que o mundo nos separe.",
+    "O amor que nos une é maior do que qualquer desafio.",
+    "Minha vida ganhou sentido desde que te conheci.",
+    "Você é meu porto seguro, minha calmaria.",
+    "Mesmo longe, sinto seu abraço apertado em mim.",
+    "Que nosso amor seja sempre fonte de coragem.",
+    "Você é meu melhor presente, nunca esqueça disso.",
+    "Nosso caminho é feito de amor, respeito e confiança.",
+    "Cada dia ao seu lado é um dia especial para mim.",
+    "A saudade só mostra o quanto eu te amo.",
+    "Em cada pensamento, você está presente, sempre.",
+    "Nossa união é forte, nada pode nos derrubar.",
+    "Te amo mais a cada dia, meu querido.",
+    "Você me inspira a ser uma pessoa melhor sempre.",
+    "Nosso amor é nossa maior conquista.",
+    "Mesmo distantes, estamos sempre juntos no coração.",
+    "Teu amor me dá forças para tudo nesta vida.",
+    "Que a felicidade te acompanhe todos os dias.",
+    "Você é a razão do meu sorriso mais sincero.",
+    "Em você encontrei o que sempre procurei.",
+    "Nosso amor é lindo, verdadeiro e eterno.",
+    "Cada momento contigo é um sonho realizado.",
+    "Te amo hoje, amanhã e sempre, meu amor.",
+    "Nossa história é feita de cumplicidade e carinho.",
+    "Você é meu amor, meu amigo e meu tudo.",
+    "Nosso laço é forte, inquebrável e verdadeiro.",
+    "Que a paz esteja sempre contigo, meu amor.",
+    "Você é meu eterno companheiro de vida.",
+    "Teu amor é o melhor presente que recebi.",
+    "Com você, sinto que tudo é possível.",
+    "Nossa conexão vai além das palavras.",
+    "Você é minha metade, minha alma gêmea.",
+    "Te amo profundamente, de todo coração.",
+    "Nosso amor é o que me faz seguir em frente.",
+    "Você é meu sonho realizado, minha realidade.",
+    "Que nunca nos falte amor e respeito.",
+    "Você é minha inspiração e minha alegria.",
+    "Nosso vínculo é sagrado e cheio de amor.",
+    "Teu sorriso ilumina até meus dias nublados.",
+    "Você é meu porto seguro, meu abrigo.",
+    "Com você, tudo fica mais fácil e bonito.",
+    "Nosso amor é fonte de luz e esperança.",
+    "Você é o motivo da minha felicidade.",
+    "Te amo com todo meu ser, meu amor.",
+    "Nossa história é escrita com amor e paixão.",
+    "Você é meu melhor amigo e meu grande amor.",
+    "Com você, aprendi o verdadeiro significado do amor.",
+    "Nosso laço é forte e jamais será quebrado.",
+    "Você é minha força e meu conforto.",
+    "Te amo mais do que palavras podem expressar.",
+    "Nossa união é baseada em amor e confiança.",
+    "Você é a razão da minha alegria constante.",
+    "Com você, a vida é uma linda aventura.",
+    "Nosso amor é a base de tudo que sou.",
+    "Você é minha eterna motivação e paixão.",
+    "Te amo hoje, amanhã e por toda a vida.",
+    "Nosso amor é um tesouro precioso e único.",
+    "Você é minha luz na escuridão, meu amor.",
+    "Com você, encontro paz e felicidade.",
+    "Nossa história é a mais bonita que já vivi.",
+    "Você é meu sonho que virou realidade.",
+    "Te amo com todo o meu coração, sempre.",
+    "Nosso amor é infinito e incondicional."
+  ];
+
+  const signature = "Te amo, Gabi";
+
+  const btn = document.getElementById("openMsgBtn");
+  const msgArea = document.getElementById("messageArea");
+  const signatureArea = document.getElementById("signatureArea");
+
+  function getTodayIndex() {
+    const startDate = new Date(2025, 5, 16); // 16 de junho de 2025 (mês 5 é junho, pois é 0-based)
+    const today = new Date();
+    const diffTime = today - startDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    // ciclo entre 0 e 89 (90 mensagens)
+    return ((diffDays % messages.length) + messages.length) % messages.length;
+  }
+
+  function showMessage() {
+    const index = getTodayIndex();
+    msgArea.textContent = messages[index];
+    signatureArea.textContent = signature;
+    localStorage.setItem("lastMessageIndex", index);
+  }
+
+  btn.addEventListener("click", showMessage);
+</script>
+
+</body>
+</html>
